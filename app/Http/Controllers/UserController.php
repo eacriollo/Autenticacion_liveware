@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     //
 
-    public function __construct()
-    {
-        $this->middleware('permission:user.view')->only(['index']);
-    }
+
     public function index()
     {
+        abort_unless(auth()->user()->can('user.view'), 403);
         $users = User::with('roles')->latest()->get();
         return view('users.index', compact('users'));
     }
