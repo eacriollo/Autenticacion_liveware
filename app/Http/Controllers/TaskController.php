@@ -10,6 +10,16 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware('permission:task.view')->only(['index', 'show']);
+        $this->middleware('permission:task.create')->only(['create', 'store']);
+        $this->middleware('permission:task.edit')->only(['edit', 'update']);
+        $this->middleware('permission:task.delete')->only(['destroy']);
+    }
+
+
     public function index()
     {
         //
